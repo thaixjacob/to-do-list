@@ -1,9 +1,10 @@
-import fs from "fs"; // ES6
-import { v4 as uuid } from "uuid";
+/* eslint-disable no-console */
+import fs from 'fs'; // ES6
+import { v4 as uuid } from 'uuid';
 
-const DB_FILE_PATH = "./core/db";
+const DB_FILE_PATH = './core/db';
 
-console.log("[CRUD]");
+console.log('[CRUD]');
 
 type UUID = string;
 
@@ -31,8 +32,8 @@ function create(content: string): Todo {
 
 function read(): Array<Todo> {
   // ler o content no sistema
-  const dbString = fs.readFileSync(DB_FILE_PATH, "utf-8");
-  const db = JSON.parse(dbString || "{}");
+  const dbString = fs.readFileSync(DB_FILE_PATH, 'utf-8');
+  const db = JSON.parse(dbString || '{}');
   if (!db.todos) {
     return [];
   }
@@ -60,7 +61,7 @@ function update(id: UUID, partialTodo: Partial<Todo>) {
   );
 
   if (!updatedTodo) {
-    throw new Error("Please, provide another ID!");
+    throw new Error('Please, provide another ID!');
   }
 
   return updatedTodo;
@@ -94,21 +95,21 @@ function deleteById(id: UUID) {
 }
 
 function CLEAR_DB() {
-  fs.writeFileSync(DB_FILE_PATH, "");
+  fs.writeFileSync(DB_FILE_PATH, '');
 }
 
 // [SIMULATION]
 CLEAR_DB();
 
-create("Primeira TODO");
+create('Primeira TODO');
 
-const secondTodo = create("Segunda TODO");
+const secondTodo = create('Segunda TODO');
 deleteById(secondTodo.id);
 
-const thirdTodo = create("Terceira TODO");
-updateContentById(thirdTodo.id, "Terceira TODO Atualizada");
+const thirdTodo = create('Terceira TODO');
+updateContentById(thirdTodo.id, 'Terceira TODO Atualizada');
 
-create("Quarta TODO");
+create('Quarta TODO');
 
 const todos = read();
 console.log(todos);
