@@ -1,0 +1,22 @@
+{
+  "todos": [
+    {
+      "id": "f127fc22-0eb9-4352-bd63-a8d2a79d78aa",
+      "date": "2023-05-09T15:00:46.597Z",
+      "content": "Primeira TODO",
+      "done": false
+    },
+    {
+      "id": "6584340e-f62f-4319-a1f2-0126cea3a05e",
+      "date": "2023-05-09T15:00:46.600Z",
+      "content": "Terceira TODO Atualizada",
+      "done": false
+    },
+    {
+      "id": "e55e4f57-687c-432f-9720-89ef469704a9",
+      "date": "2023-05-09T15:00:46.602Z",
+      "content": "Quarta TODO",
+      "done": false
+    }
+  ]
+}
