@@ -1,5 +1,5 @@
 import React from "react";
-import { GlobalStyles } from "../src/theme/GlobalStyles";
+import { GlobalStyles } from "@ui/theme/GlobalStyles";
 
 const BACKGROUND_IMAGE =
   "https://img.freepik.com/free-photo/calendar-planner-agenda-schedule-concept_53876-133697.jpg?w=996&t=st=1683805630~exp=1683806230~hmac=7a118bb63f487d0e78dd994c04322297ac4bace251f71053f9865ad65830ef8e";
@@ -8,9 +8,6 @@ function HomePage() {
   return (
     <main>
       <GlobalStyles themeName="orange" />
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
       <header
         style={{
           backgroundImage: `url('${BACKGROUND_IMAGE}')`,
