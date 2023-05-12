@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import fs from 'fs'; // ES6
-import { v4 as uuid } from 'uuid';
+/* import { v4 as uuid } from 'uuid'; */
 
 const DB_FILE_PATH = './core/db';
 
-console.log('[CRUD]');
+/* console.log('[CRUD]'); */
 
-type UUID = string;
+/* type UUID = string; */
 
 interface Todo {
   id: string;
@@ -15,7 +15,7 @@ interface Todo {
   done: boolean;
 }
 
-function create(content: string): Todo {
+/* function create(content: string): Todo {
   const todo: Todo = {
     id: uuid(),
     date: new Date().toISOString(),
@@ -28,9 +28,9 @@ function create(content: string): Todo {
   // salvar o content no sistema
   fs.writeFileSync(DB_FILE_PATH, JSON.stringify({ todos }, null, 2));
   return todo;
-}
+} */
 
-function read(): Array<Todo> {
+export function read(): Array<Todo> {
   // ler o content no sistema
   const dbString = fs.readFileSync(DB_FILE_PATH, 'utf-8');
   const db = JSON.parse(dbString || '{}');
@@ -40,7 +40,7 @@ function read(): Array<Todo> {
   return db.todos;
 }
 
-function update(id: UUID, partialTodo: Partial<Todo>) {
+/* function update(id: UUID, partialTodo: Partial<Todo>) {
   let updatedTodo;
   const todos = read();
   todos.forEach((currentTodo) => {
@@ -65,14 +65,15 @@ function update(id: UUID, partialTodo: Partial<Todo>) {
   }
 
   return updatedTodo;
-}
+} */
 
-function updateContentById(id: UUID, content: string): Todo {
+/* function updateContentById(id: UUID, content: string): Todo {
   return update(id, {
     content,
   });
-}
+} */
 
+/* 
 function deleteById(id: UUID) {
   const todos = read();
   const todosWhitoutOne = todos.filter((todo) => {
@@ -92,14 +93,14 @@ function deleteById(id: UUID) {
       2
     )
   );
-}
+} */
 
-function CLEAR_DB() {
+/* function CLEAR_DB() {
   fs.writeFileSync(DB_FILE_PATH, '');
-}
+} */
 
 // [SIMULATION]
-CLEAR_DB();
+/* CLEAR_DB();
 
 create('Primeira TODO');
 
@@ -114,3 +115,4 @@ create('Quarta TODO');
 const todos = read();
 console.log(todos);
 console.log(todos.length);
+ */
