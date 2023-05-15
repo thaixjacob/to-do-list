@@ -1,18 +1,18 @@
 /* eslint-disable no-console */
-import fs from 'fs'; // ES6
+import fs from 'fs' // ES6
 /* import { v4 as uuid } from 'uuid'; */
 
-const DB_FILE_PATH = './core/db';
+const DB_FILE_PATH = './core/db'
 
 /* console.log('[CRUD]'); */
 
 /* type UUID = string; */
 
 interface Todo {
-  id: string;
-  date: string;
-  content: string;
-  done: boolean;
+  id: string
+  date: string
+  content: string
+  done: boolean
 }
 
 /* function create(content: string): Todo {
@@ -32,12 +32,12 @@ interface Todo {
 
 export function read(): Array<Todo> {
   // ler o content no sistema
-  const dbString = fs.readFileSync(DB_FILE_PATH, 'utf-8');
-  const db = JSON.parse(dbString || '{}');
+  const dbString = fs.readFileSync(DB_FILE_PATH, 'utf-8')
+  const db = JSON.parse(dbString || '{}')
   if (!db.todos) {
-    return [];
+    return []
   }
-  return db.todos;
+  return db.todos
 }
 
 /* function update(id: UUID, partialTodo: Partial<Todo>) {
