@@ -1,10 +1,25 @@
 import React from 'react'
 import { GlobalStyles } from '@ui/theme/GlobalStyles'
+import { todoController } from '@ui/controller/todo'
 
 const BACKGROUND_IMAGE =
   'https://img.freepik.com/free-photo/calendar-planner-agenda-schedule-concept_53876-133697.jpg?w=996&t=st=1683805630~exp=1683806230~hmac=7a118bb63f487d0e78dd994c04322297ac4bace251f71053f9865ad65830ef8e'
 
+interface HomeTodo {
+  id: string
+  content: string
+}
+
 function HomePage() {
+  const [todos, setTodos] = React.useState<HomeTodo[]>([])
+
+  // Load infos onload
+  React.useEffect(() => {
+    todoController.get().then((todos) => {
+      setTodos(todos)
+    })
+  }, [])
+
   return (
     <main>
       <GlobalStyles themeName="orange" />
@@ -17,7 +32,7 @@ function HomePage() {
           <h1>What should I do today?</h1>
         </div>
         <form>
-          <input type="text" placeholder="Run, study..." />
+          <input type="text" placeholder="Run, Study..." />
           <button type="submit" aria-label="Add new item">
             +
           </button>
@@ -42,45 +57,49 @@ function HomePage() {
           </thead>
 
           <tbody>
-            <tr>
-              <td>
-                <input type="checkbox" />
-              </td>
-              <td>d4f26</td>
-              <td>Walk for 30 minutes in the park in the morning.</td>
-              <td align="right">
-                <button data-type="delete">Delete</button>
-              </td>
-            </tr>
+            {todos.map((todo) => {
+              return (
+                <tr key={todo.id}>
+                  <td>
+                    <input type="checkbox" />
+                  </td>
+                  <td>{todo.id.substring(0, 4)}</td>
+                  <td>{todo.content}</td>
+                  <td align="right">
+                    <button data-type="delete">Delete</button>
+                  </td>
+                </tr>
+              )
+            })}
 
-            <tr>
-              <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
+            {/* <tr>
+              <td colSpan={4} align="center" style={{ textAlign: "center" }}>
                 Loading...
               </td>
-            </tr>
+            </tr> */}
 
-            <tr>
+            {/* <tr>
               <td colSpan={4} align="center">
                 No items found
               </td>
-            </tr>
+            </tr> */}
 
-            <tr>
-              <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
+            {/* <tr>
+              <td colSpan={4} align="center" style={{ textAlign: "center" }}>
                 <button data-type="load-more">
-                  Show more{' '}
+                  Show more{" "}
                   <span
                     style={{
-                      display: 'inline-block',
-                      marginLeft: '4px',
-                      fontSize: '1.2em',
+                      display: "inline-block",
+                      marginLeft: "4px",
+                      fontSize: "1.2em",
                     }}
                   >
                     ↓
                   </span>
                 </button>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </section>
