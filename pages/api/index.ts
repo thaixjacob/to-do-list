@@ -1,3 +1,10 @@
+// --> BACKEND
+/*
+
+Responsible for handling a specific API route and returning the appropriate response.
+
+*/
+
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(request: NextApiRequest, response: NextApiResponse) {
