@@ -1,3 +1,10 @@
+// --> BACKEND
+/*
+
+Code related to CRUD operations (Create, Read, Update, Delete) to manage a list of tasks (all)
+
+*/
+
 /* eslint-disable no-console */
 import fs from 'fs' // ES6
 /* import { v4 as uuid } from 'uuid'; */
