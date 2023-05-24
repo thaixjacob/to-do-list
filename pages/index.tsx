@@ -1,4 +1,4 @@
-// --> FRONTEND
+// --> FRONTEND (View - Displays everything to the user)
 /*
 
 Defines the structure and layout of the frontend application's home page.
