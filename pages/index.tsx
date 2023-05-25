@@ -18,21 +18,30 @@ interface HomeTodo {
 }
 
 function HomePage() {
+  const [isLoading, setIsLoading] = React.useState(true)
+  const [initialLoadComplete, setInitialLoadComplete] = React.useState(false)
   const [totalPages, setTotalPages] = React.useState(0)
   const [page, setPage] = React.useState(1)
   const [todos, setTodos] = React.useState<HomeTodo[]>([])
+  const hasNoTodos = todos.length === 0 && !isLoading
 
   const hasMorePages = totalPages > page
 
   // Load infos onload
   React.useEffect(() => {
-    todoController.get({ page }).then(({ todos, pages }) => {
-      setTodos((oldTodos) => {
-        return [...oldTodos, ...todos]
-      })
-      setTotalPages(pages)
-    })
-  }, [page])
+    setInitialLoadComplete(true)
+    if (!initialLoadComplete) {
+      todoController
+        .get({ page })
+        .then(({ todos, pages }) => {
+          setTodos(todos)
+          setTotalPages(pages)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    }
+  }, [])
 
   return (
     <main>
@@ -86,22 +95,46 @@ function HomePage() {
               )
             })}
 
-            {/* <tr>
-              <td colSpan={4} align="center" style={{ textAlign: "center" }}>
-                Loading...
-              </td>
-            </tr> */}
+            {isLoading && (
+              <tr>
+                <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
+                  Loading...
+                </td>
+              </tr>
+            )}
 
-            {/* <tr>
-              <td colSpan={4} align="center">
-                No items found
-              </td>
-            </tr> */}
+            {hasNoTodos && (
+              <tr>
+                <td colSpan={4} align="center">
+                  No items found
+                </td>
+              </tr>
+            )}
 
             {hasMorePages && (
               <tr>
                 <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
-                  <button data-type="load-more" onClick={() => setPage(page + 1)}>
+                  <button
+                    data-type="load-more"
+                    onClick={() => {
+                      setIsLoading(true)
+                      const nextPage = page + 1
+
+                      setPage(nextPage)
+
+                      todoController
+                        .get({ page: nextPage })
+                        .then(({ todos, pages }) => {
+                          setTodos((oldTodos) => {
+                            return [...oldTodos, ...todos]
+                          })
+                          setTotalPages(pages)
+                        })
+                        .finally(() => {
+                          setIsLoading(false)
+                        })
+                    }}
+                  >
                     Page {page}. Show more{' '}
                     <span
                       style={{
