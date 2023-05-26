@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // --> FRONTEND (View - Displays everything to the user)
 /*
 
@@ -23,8 +24,11 @@ function HomePage() {
   const [totalPages, setTotalPages] = React.useState(0)
   const [page, setPage] = React.useState(1)
   const [todos, setTodos] = React.useState<HomeTodo[]>([])
-  const hasNoTodos = todos.length === 0 && !isLoading
+  const [search, setSearch] = React.useState('')
 
+  const homeTodos = todoController.filterTodosByContent<HomeTodo>(search, todos) //derived state in React
+
+  const hasNoTodos = homeTodos.length === 0 && !isLoading
   const hasMorePages = totalPages > page
 
   // Load infos onload
@@ -64,7 +68,14 @@ function HomePage() {
 
       <section>
         <form>
-          <input type="text" placeholder="Filter current list, e.g. Dentist" />
+          <input
+            type="text"
+            placeholder="Filter current list, e.g. Dentist"
+            value={search}
+            onChange={function handleSearch(event) {
+              setSearch(event.target.value) //onChange in React
+            }}
+          />
         </form>
 
         <table border={1}>
@@ -80,7 +91,7 @@ function HomePage() {
           </thead>
 
           <tbody>
-            {todos.map((todo) => {
+            {homeTodos.map((todo) => {
               return (
                 <tr key={todo.id}>
                   <td>
