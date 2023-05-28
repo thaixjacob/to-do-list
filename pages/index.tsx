@@ -20,7 +20,7 @@ interface HomeTodo {
 
 function HomePage() {
   const [isLoading, setIsLoading] = React.useState(true)
-  const [initialLoadComplete, setInitialLoadComplete] = React.useState(false)
+  const initialLoadComplete = React.useRef(false)
   const [totalPages, setTotalPages] = React.useState(0)
   const [page, setPage] = React.useState(1)
   const [todos, setTodos] = React.useState<HomeTodo[]>([])
@@ -33,8 +33,7 @@ function HomePage() {
 
   // Load infos onload
   React.useEffect(() => {
-    setInitialLoadComplete(true)
-    if (!initialLoadComplete) {
+    if (!initialLoadComplete.current) {
       todoController
         .get({ page })
         .then(({ todos, pages }) => {
@@ -43,6 +42,7 @@ function HomePage() {
         })
         .finally(() => {
           setIsLoading(false)
+          initialLoadComplete.current = true
         })
     }
   }, [])
