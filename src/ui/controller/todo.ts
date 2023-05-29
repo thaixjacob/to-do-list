@@ -26,7 +26,32 @@ function filterTodosByContent<Todo>(search: string, todos: Array<Todo & { conten
   return homeTodos
 }
 
+interface TodoControllerCreateParams {
+  content?: string
+  onError: () => void
+  onSuccess: (todo: any) => void
+}
+
+function create({ content, onError, onSuccess }: TodoControllerCreateParams) {
+  //Fail Fast em caso de nao tiver o content.
+  if (!content) {
+    onError()
+    return
+  }
+
+  //It will come from the repository
+  const todo = {
+    id: '4585',
+    content,
+    date: new Date(),
+    done: false,
+  }
+
+  onSuccess(todo)
+}
+
 export const todoController = {
   get,
   filterTodosByContent,
+  create,
 }
