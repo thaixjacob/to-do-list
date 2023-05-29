@@ -9,6 +9,7 @@ which represents the desired results page, and uses the todoRepository to fetch 
 
 import { todoRepository } from '@ui/repository/todo' //Accesses/manipulates the data of "todo"
 import { Todo } from '@ui/schema/todo'
+import { z as schema } from 'zod'
 
 interface TodoControllerGetParams {
   page: number
@@ -35,13 +36,15 @@ interface TodoControllerCreateParams {
 
 function create({ content, onError, onSuccess }: TodoControllerCreateParams) {
   //Fail Fast Validation
-  if (!content) {
+  const parsedParams = schema.string().nonempty().safeParse(content)
+
+  if (!parsedParams.success) {
     onError()
     return
   }
 
   todoRepository
-    .createByContent(content)
+    .createByContent(parsedParams.data)
     .then((newTodo) => {
       onSuccess(newTodo)
     })
