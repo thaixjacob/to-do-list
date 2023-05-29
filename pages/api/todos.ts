@@ -15,5 +15,10 @@ export default function handler(request: NextApiRequest, response: NextApiRespon
     return
   }
 
+  if (request.method === 'POST') {
+    todoController.create(request, response)
+    return
+  }
+
   response.status(405).json({ message: 'Method not allowed.' })
 }
