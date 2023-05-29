@@ -5,7 +5,7 @@ Implements a repository for "all" related operations (tasks or items to be done)
 read provided by the @db-crud-todo module.
 
 */
-import { read } from '@db-crud-todo'
+import { read, create } from '@db-crud-todo'
 
 interface TodoRepositoryGetParams {
   page?: number
@@ -36,8 +36,15 @@ function get({ page, limit }: TodoRepositoryGetParams = {}): TodoRepositoryGetOu
   }
 }
 
+async function createByContent(content: string): Promise<Todo> {
+  const newTodo = create(content)
+
+  return newTodo
+}
+
 export const todoRepository = {
   get,
+  createByContent,
 }
 
 //Model/Schema
