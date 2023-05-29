@@ -5,6 +5,8 @@ Source of truth of my data, where the controller gets the information
 Ask: What do I receive and what do I return?
 
 */
+import { z as schema } from 'zod'
+import { Todo, TodoSchema } from '@ui/schema/todo'
 
 interface TodoRepositoryGetParams {
   page: number
@@ -31,16 +33,42 @@ function get({ page, limit }: TodoRepositoryGetParams): Promise<TodoRepositoryGe
   })
 }
 
-export const todoRepository = {
-  get,
+export async function createByContent(content: string): Promise<Todo> {
+  const response = await fetch('/api/todos', {
+    method: 'POST',
+    headers: {
+      // MIME Type
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      content,
+    }),
+  })
+
+  if (response.ok) {
+    const serverResponse = await response.json()
+
+    const ServerResponseSchema = schema.object({
+      todo: TodoSchema,
+    })
+
+    const serverResponseParsed = ServerResponseSchema.safeParse(serverResponse)
+
+    if (!serverResponseParsed.success) {
+      throw new Error('Failed to create TODO :(')
+    }
+
+    const todo = serverResponseParsed.data.todo
+
+    return todo
+  }
+
+  throw new Error('Faile to create todo')
 }
 
-// Model/Schema
-interface Todo {
-  id: string
-  content: string
-  date: Date
-  done: boolean
+export const todoRepository = {
+  get,
+  createByContent,
 }
 
 function parseTodosFromServer(responseBody: unknown): {
@@ -78,7 +106,7 @@ function parseTodosFromServer(responseBody: unknown): {
           id,
           content,
           done: String(done).toLowerCase() === 'true',
-          date: new Date(date),
+          date: date,
         }
       }),
     }

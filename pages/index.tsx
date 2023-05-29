@@ -25,6 +25,7 @@ function HomePage() {
   const [page, setPage] = React.useState(1)
   const [todos, setTodos] = React.useState<HomeTodo[]>([])
   const [search, setSearch] = React.useState('')
+  const [newTodoContent, setNewTodoContent] = React.useState('')
 
   const homeTodos = todoController.filterTodosByContent<HomeTodo>(search, todos) //derived state in React
 
@@ -58,8 +59,31 @@ function HomePage() {
         <div className="typewriter">
           <h1>What should I do today?</h1>
         </div>
-        <form>
-          <input type="text" placeholder="Run, Study..." />
+        <form
+          onSubmit={(event) => {
+            event.preventDefault() //avoid refresh page and prevent the SPA behavior
+            todoController.create({
+              content: newTodoContent,
+              onSuccess(todo: HomeTodo) {
+                setTodos((oldTodos) => {
+                  return [todo, ...oldTodos]
+                })
+                setNewTodoContent('')
+              },
+              onError() {
+                alert('Fill in the task to be done field to create a new task.')
+              },
+            })
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Run, Study..."
+            value={newTodoContent}
+            onChange={function newTodoHandler(event) {
+              setNewTodoContent(event.target.value)
+            }}
+          />
           <button type="submit" aria-label="Add new item">
             +
           </button>

@@ -8,6 +8,7 @@ which represents the desired results page, and uses the todoRepository to fetch 
 */
 
 import { todoRepository } from '@ui/repository/todo' //Accesses/manipulates the data of "todo"
+import { Todo } from '@ui/schema/todo'
 
 interface TodoControllerGetParams {
   page: number
@@ -26,7 +27,31 @@ function filterTodosByContent<Todo>(search: string, todos: Array<Todo & { conten
   return homeTodos
 }
 
+interface TodoControllerCreateParams {
+  content?: string
+  onError: () => void
+  onSuccess: (todo: Todo) => void
+}
+
+function create({ content, onError, onSuccess }: TodoControllerCreateParams) {
+  //Fail Fast Validation
+  if (!content) {
+    onError()
+    return
+  }
+
+  todoRepository
+    .createByContent(content)
+    .then((newTodo) => {
+      onSuccess(newTodo)
+    })
+    .catch(() => {
+      onError
+    })
+}
+
 export const todoController = {
   get,
   filterTodosByContent,
+  create,
 }
