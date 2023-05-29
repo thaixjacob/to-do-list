@@ -5,15 +5,12 @@ Code related to CRUD operations (Create, Read, Update, Delete) to manage a list 
 
 */
 
-/* eslint-disable no-console */
 import fs from 'fs' // ES6
-/* import { v4 as uuid } from 'uuid'; */
+import { v4 as uuid } from 'uuid'
 
 const DB_FILE_PATH = './core/db'
 
-/* console.log('[CRUD]'); */
-
-/* type UUID = string; */
+//type UUID = string
 
 interface Todo {
   id: string
@@ -22,20 +19,20 @@ interface Todo {
   done: boolean
 }
 
-/* function create(content: string): Todo {
+export function create(content: string): Todo {
   const todo: Todo = {
     id: uuid(),
     date: new Date().toISOString(),
     content: content,
     done: false,
-  };
+  }
 
-  const todos: Todo[] = [...read(), todo];
+  const todos: Todo[] = [...read(), todo]
 
   // salvar o content no sistema
-  fs.writeFileSync(DB_FILE_PATH, JSON.stringify({ todos }, null, 2));
-  return todo;
-} */
+  fs.writeFileSync(DB_FILE_PATH, JSON.stringify({ todos }, null, 2))
+  return todo
+}
 
 export function read(): Array<Todo> {
   // ler o content no sistema
