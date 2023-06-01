@@ -89,15 +89,14 @@ export function update(id: UUID, partialTodo: Partial<Todo>): Todo {
   });
 } */
 
-/* 
-function deleteById(id: UUID) {
-  const todos = read();
+export function deleteById(id: UUID) {
+  const todos = read()
   const todosWhitoutOne = todos.filter((todo) => {
     if (id === todo.id) {
-      return false;
+      return false
     }
-    return true;
-  });
+    return true
+  })
 
   fs.writeFileSync(
     DB_FILE_PATH,
@@ -108,8 +107,8 @@ function deleteById(id: UUID) {
       null,
       2
     )
-  );
-} */
+  )
+}
 
 /* function CLEAR_DB() {
   fs.writeFileSync(DB_FILE_PATH, '');
