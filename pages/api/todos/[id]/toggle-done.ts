@@ -1,8 +1,8 @@
 // --> BACKEND
-/*
+/* 
 
-Define o comportamento do manipulador de rota para a rota em questão, direcionando as requisições PUT para a função
-toggleDone do controlador de tarefas e retornando um erro para outros métodos de requisição.
+Sets the behaviour of the route handler for the route in question, directing PUT requests to the
+toggleDone function and returning an error for other request methods.
 
 */
 
