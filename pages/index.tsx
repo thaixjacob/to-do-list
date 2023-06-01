@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 // --> FRONTEND (View - Displays everything to the user)
 /*
 
@@ -154,7 +153,25 @@ function HomePage() {
                     {todo.done && <s>{todo.content}</s>}
                   </td>
                   <td align="right">
-                    <button data-type="delete">Delete</button>
+                    <button
+                      data-type="delete"
+                      onClick={function handleClick() {
+                        todoController
+                          .deleteById('todo.id')
+                          .then(() => {
+                            setTodos((currentTodos) => {
+                              return currentTodos.filter((currentTodo) => {
+                                return currentTodo.id !== todo.id
+                              })
+                            })
+                          })
+                          .catch(() => {
+                            alert('Failed to delete.')
+                          })
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               )
