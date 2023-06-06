@@ -7,6 +7,7 @@
     "start:crud": "npx ts-node ./core/crud.ts",
     "dev:crud": "nodemon --ext ts,tsx --exec 'npm run start:crud'",
     "dev": "next dev",
+    "lint": "eslint ./*.{jsx,js,ts,tsx}",
     "build": "next build",
     "start": "next start",
     "cy:open": "cypress open",
