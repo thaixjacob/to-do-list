@@ -1,0 +1,15 @@
+# Escreve o passo a passo de como rodar o nosso sistema/typeline para rodar o software
+
+name: '[CI] Continuous Integration'
+
+# Sempre que tiver um commit/pull request for aberto
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Lint'
+        run: "echo 'Lint is running'"
