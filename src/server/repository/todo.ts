@@ -66,9 +66,21 @@ async function get({ page, limit }: TodoRepositoryGetParams = {}): Promise<TodoR
 }
 
 async function createByContent(content: string): Promise<Todo> {
-  const newTodo = create(content)
+  const { data, error } = await supabase
+    .from('todos')
+    .insert([
+      {
+        content,
+      },
+    ])
+    .select()
+    .single()
 
-  return newTodo
+  if (error) throw new Error('Failed to create todo')
+
+  const parsedData = TodoSchema.parse(data)
+
+  return parsedData
 }
 
 async function toggleDone(id: string): Promise<Todo> {
