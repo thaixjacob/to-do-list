@@ -7,7 +7,6 @@ read provided by the @db-crud-todo module.
 */
 
 // Supabase ==================================================================
-// TODO: Separar em outro arquivo
 
 import { createClient } from '@supabase/supabase-js'
 
@@ -17,7 +16,6 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 // ===========================================================================
 
-import { read, create, update, deleteById as dbDeleteById } from '@db-crud-todo'
 import { HttpNotFoundError } from '@server/infra/errors'
 import { Todo, TodoSchema } from '@server/schema/todo'
 
@@ -83,18 +81,37 @@ async function createByContent(content: string): Promise<Todo> {
   return parsedData
 }
 
+async function getTodoById(id: string): Promise<Todo> {
+  const { data, error } = await supabase.from('todos').select('*').eq('id', id).single()
+
+  if (error) throw new Error('Failed to get todo by id')
+
+  const parsedData = TodoSchema.safeParse(data)
+  if (!parsedData.success) throw new Error('Failed to parse TODO created')
+
+  return parsedData.data
+}
+
 async function toggleDone(id: string): Promise<Todo> {
-  const ALL_TODOS = read()
+  const todo = await getTodoById(id)
+  const { data, error } = await supabase
+    .from('todos')
+    .update({
+      done: !todo.done,
+    })
+    .eq('id', id)
+    .select()
+    .single()
 
-  const todo = ALL_TODOS.find((todo) => todo.id === id)
+  if (error) throw new Error('Failed to get todo by id')
 
-  if (!todo) throw new Error(`It was not possible to find a to do with id ${id}`)
+  const parsedData = TodoSchema.safeParse(data)
 
-  const updatedTodo = update(todo.id, {
-    done: !todo.done,
-  })
+  if (!parsedData.success) {
+    throw new Error('Failed to return updated todo')
+  }
 
-  return updatedTodo
+  return parsedData.data
 }
 
 async function deleteById(id: string) {
