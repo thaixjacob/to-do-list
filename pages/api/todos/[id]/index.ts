@@ -9,9 +9,9 @@ deleteById function and returning an error for other request methods.
 import { todoController } from '@server/controller/todo'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default function handler(request: NextApiRequest, response: NextApiResponse) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method === 'DELETE') {
-    todoController.deleteById(request, response)
+    await todoController.deleteById(request, response)
     return
   }
 

@@ -7,6 +7,6 @@ Responsible for handling a specific API route and returning the appropriate resp
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default function handler(request: NextApiRequest, response: NextApiResponse) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   response.status(200).json({ message: 'Response 200' })
 }
