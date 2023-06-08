@@ -49,7 +49,7 @@ function create({ content, onError, onSuccess }: TodoControllerCreateParams) {
       onSuccess(newTodo)
     })
     .catch(() => {
-      onError
+      onError()
     })
 }
 

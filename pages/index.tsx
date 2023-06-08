@@ -158,16 +158,18 @@ function HomePage() {
                       data-type="delete"
                       onClick={function handleClick() {
                         todoController
-                          .deleteById('todo.id')
+                          .deleteById(todo.id)
                           .then(() => {
                             setTodos((currentTodos) => {
                               return currentTodos.filter((currentTodo) => {
-                                return currentTodo.id !== todo.id
+                                if (currentTodo.id === todo.id) return false
+
+                                return true
                               })
                             })
                           })
                           .catch(() => {
-                            alert('Failed to delete.')
+                            console.error('Failed to delete')
                           })
                       }}
                     >

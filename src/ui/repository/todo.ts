@@ -88,7 +88,9 @@ async function toggleDone(todoId: string): Promise<Todo> {
 }
 
 async function deleteById(id: string) {
-  const response = await fetch(`/api/todos/${id}`, { method: 'DELETE' })
+  const response = await fetch(`/api/todos/${id}`, {
+    method: 'DELETE',
+  })
 
   if (!response.ok) {
     throw new Error('Failed to delete')
