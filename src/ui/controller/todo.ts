@@ -16,7 +16,7 @@ interface TodoControllerGetParams {
 }
 
 async function get(params: TodoControllerGetParams) {
-  return todoRepository.get({ page: params.page, limit: 10 })
+  return todoRepository.get({ page: params.page, limit: 5 })
 }
 
 function filterTodosByContent<Todo>(search: string, todos: Array<Todo & { content: string }>): Todo[] {
