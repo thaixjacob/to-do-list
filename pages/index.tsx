@@ -45,6 +45,7 @@ function HomePage() {
           setIsLoading(false)
           initialLoadComplete.current = true
         })
+        .catch(() => alert('We are having trouble accessing your tasks. Sorry for the inconvenience.'))
     }
   }, [])
 
